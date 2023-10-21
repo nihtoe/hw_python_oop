@@ -81,8 +81,8 @@ class Running(Training):
         """Получить количество затраченных калорий."""
         mean_speed: float = self.get_mean_speed()
         duration_min: float = self.duration * self.M_IN_HOUR
-        return ((self.CALORIES_MEAN_SPEED_MULTIPLIER * mean_speed +
-                 self.CALORIES_MEAN_SPEED_SHIFT)
+        return ((self.CALORIES_MEAN_SPEED_MULTIPLIER * mean_speed
+                + self.CALORIES_MEAN_SPEED_SHIFT)
                 * self.weihgt / self.M_IN_KM * duration_min)
 
 
