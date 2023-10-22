@@ -1,3 +1,6 @@
+from typing import Type
+
+
 class InfoMessage:
     """Информационное сообщение о тренировке."""
 
@@ -52,11 +55,10 @@ class Training:
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        pass
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
-        info = InfoMessage(self.training_type,
+        info = InfoMessage(type(self).__name__,
                            self.duration,
                            self.get_distance(),
                            self.get_mean_speed(),
@@ -66,16 +68,8 @@ class Training:
 
 class Running(Training):
     """Тренировка: бег."""
-    training_type = 'Running'
-    CALORIES_MEAN_SPEED_MULTIPLIER = 18
-    CALORIES_MEAN_SPEED_SHIFT = 1.79
-
-    def __init__(self,
-                 action: int,
-                 duration: float,
-                 weight: float,
-                 ) -> None:
-        super().__init__(action, duration, weight)
+    CALORIES_MEAN_SPEED_MULTIPLIER: float = 18
+    CALORIES_MEAN_SPEED_SHIFT: float = 1.79
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
@@ -88,11 +82,10 @@ class Running(Training):
 
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
-    training_type = 'SportsWalking'
-    COEF_KMH_TO_MS = 0.278
-    COEF_CAL = 0.035
-    COEF_CAL_2 = 0.029
-    COEF_HEIGHT_IN_M = 100
+    COEF_KMH_TO_MS: float = 0.278
+    COEF_CAL: float = 0.035
+    COEF_CAL_2: float = 0.029
+    COEF_HEIGHT_IN_M: int = 100
 
     def __init__(self,
                  action: int,
@@ -117,10 +110,9 @@ class SportsWalking(Training):
 
 class Swimming(Training):
     """Тренировка: плавание."""
-    training_type = 'Swimming'
-    LEN_STEP = 1.38
-    MEAN_SPEED = 1.1
-    SPEED_FACTOR = 2
+    LEN_STEP: float = 1.38
+    MEAN_SPEED: float = 1.1
+    SPEED_FACTOR: int = 2
 
     def __init__(self,
                  action: int,
@@ -148,11 +140,11 @@ class Swimming(Training):
 
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
-    workout_types = {
+    workout_types: dict[str, Type[Training]] = {
         'SWM': Swimming, 'RUN': Running, 'WLK': SportsWalking,
     }
-    workout_class = workout_types[workout_type](*data)
-    return workout_class
+    return workout_types[workout_type](*data)
+
 
 
 def main(training: Training) -> None:
