@@ -62,7 +62,6 @@ class Training:
                            self.get_spent_calories())
 
 
-
 class Running(Training):
     """Тренировка: бег."""
     CALORIES_MEAN_SPEED_MULTIPLIER: float = 18
